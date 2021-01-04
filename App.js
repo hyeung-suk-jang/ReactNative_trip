@@ -35,29 +35,7 @@ const App = () => {
   }, []);
 
   return (
-/*
-- 로그인
-table : user(id, pw)
-input : 사용자 로그인 타입, 아이디, 비번
-output : true/false
 
-- 구매코드입력(5자리)
-table : purchasecode(codenumber)
-output : true/false
-
-- 전화문의 : 0507-1484-7177
-- 이메일상담 : info@tripsoda.com
-- 나의 투어일정 리스트
-지역이름->투어타이틀, 대표투어이미지, 출발시점, 기간(소요시간), 대표이미지
-구매코드테이블 join 구매관리 join 구매관광지 join 관광지 join 관광지사진
-sorting(투어날짜순으로 정렬), 하단에 지난 투어일정 나오기.
-- 상세투어일정
-전체 투어일정 리스트(대표투어코드 정보)
-- 상세관광지정보
-주소(지도:위도경도), 전화번호, 오디오 가이드듣기, 스크롤 뷰
-- 오디오 가이드상세듣기 
-- 메세지리스트, 검색, 
-*/
     <Provider store={store}>
     <NavigationContainer>
       <Stack.Navigator>
