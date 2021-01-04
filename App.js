@@ -18,11 +18,15 @@ import Home from "./screens/Home";
 import Login from './screens/Login';
 import Join from './screens/Join';
 import SearchPW from './screens/SearchPW';
+import Main from './screens/Main';
 
-import { Provider } from 'react-redux';
-import createStore from './createStore';
+import { createStore, applyMiddleware } from "redux";
+import { Provider } from "react-redux";
+import reduxThunk from "redux-thunk";
+import reducers from "./reducers";
 
-const store = createStore();
+
+const store = createStore(reducers, applyMiddleware(reduxThunk));
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -87,8 +91,9 @@ const App = () => {
             <View></View>
          ),
          }}/>
-         
+         <Stack.Screen name="Main" component={Main} />
       </Stack.Navigator>
+      
     </NavigationContainer>
     </Provider>
   );

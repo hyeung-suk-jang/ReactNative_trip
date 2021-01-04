@@ -1,6 +1,14 @@
 import React, { useState, useRef } from 'react';
 import { View, Text ,Alert,TextInput,StyleSheet,TouchableOpacity} from 'react-native';
 import {URL} from '../constant';
+import { useDispatch, useSelector } from "react-redux";
+import { loginAction} from "../actions/userAction";
+
+
+const initialValue = {
+  id: "",
+  pw: "",
+};
 
 
 const Login = ({ navigation }) => {
@@ -11,6 +19,9 @@ const Login = ({ navigation }) => {
 
     const idInput = useRef();
     const passInput = useRef();
+
+    const dispatch = useDispatch();
+
 
     const _searchPW = () =>{
       navigation.navigate('SearchPW')
@@ -31,7 +42,9 @@ const Login = ({ navigation }) => {
         passInput.current.focus();
         return;
       }
-      
+
+      dispatch(loginAction({userid:userid,userpw:userpw},navigation));
+    }
       // //fetch
       // fetch(URL+'login', {
       //   method: 'POST',
@@ -52,6 +65,8 @@ const Login = ({ navigation }) => {
       //     console.error(error);
       //   });
       // }
+
+      
       const _onchangeTxt = (txt)=>{
         setUserid(txt)
         setErrorID(false);
@@ -161,4 +176,5 @@ const styles = StyleSheet.create({
       marginTop:20
     }
   });
+  
 export default Login;

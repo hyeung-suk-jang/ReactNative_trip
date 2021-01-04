@@ -1,16 +1,19 @@
 import {URL}  from '../constant'
-import api  from '../api'
+import api from "../api"
 
+//import { AsyncStorage } from '@react-native-community/async-storage';
 
-export const loginAction = (data) => async (dispatch) => {
+export const loginAction = (data,navigation) => async (dispatch) => {
     try {
-        const resToken = await api.post(URL+"/login", data);
+        const resToken = await api.post("/login", data);
         const token = resToken.data.token;
-        localStorage.setItem("token", JSON.stringify(token));
+        console.log(token);
+        if(token){
+            navigation.navigate('Main')
+        }
         
-        history.push("/");
     } catch (e) {
-        toast.error(e.response.data.error);
+        console.log(e.response.data.error);
     }
 };
 
