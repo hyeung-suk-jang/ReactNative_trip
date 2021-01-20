@@ -43,29 +43,8 @@ const Login = ({ navigation }) => {
         return;
       }
 
-      dispatch(loginAction({userid:userid,userpw:userpw},navigation));
+      dispatch(loginAction({userid:userid,userpw:userpw}));
     }
-      // //fetch
-      // fetch(URL+'login', {
-      //   method: 'POST',
-      //   headers: {
-      //   Accept: 'application/json',
-      //   'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({
-      //   userid: userid,
-      //   userpw: userpw,
-      //   }),
-      // }).then((response) => response.json())
-      //   .then((responseJson) => {//success
-      //     Alert.alert(responseJson);
-          
-      //   })
-      //   .catch((error) => {
-      //     console.error(error);
-      //   });
-      // }
-
       
       const _onchangeTxt = (txt)=>{
         setUserid(txt)

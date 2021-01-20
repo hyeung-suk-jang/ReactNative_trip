@@ -1,14 +1,19 @@
 import {URL}  from '../constant'
 import api from "../api"
+import { useNavigation } from '@react-navigation/native';
+import { AsyncStorage } from '@react-native-community/async-storage';
 
-//import { AsyncStorage } from '@react-native-community/async-storage';
+export const loginAction = (data) => async (dispatch) => {
+    const navigation = useNavigation();
 
-export const loginAction = (data,navigation) => async (dispatch) => {
     try {
         const resToken = await api.post("/login", data);
         const token = resToken.data.token;
         console.log(token);
         if(token){
+            AsyncStorage.setItem(
+                'usertoken',token
+              );
             navigation.navigate('Main')
         }
         

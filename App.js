@@ -1,4 +1,4 @@
-import React,{ useEffect }  from 'react';
+import React,{ useEffect,useState }  from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -25,11 +25,48 @@ import { Provider } from "react-redux";
 import reduxThunk from "redux-thunk";
 import reducers from "./reducers";
 
+import { AsyncStorage } from '@react-native-community/async-storage';
+import Tab_home from './screens/Tab_home';
+import Schedule from './screens/Tab_schedule';
+import Map from './screens/Tab_map';
+import Message from './screens/Tab_message';
+import Setting from './screens/Tab_setting';
+
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import 'react-native-gesture-handler';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import TabBarIcon from './screens/TabBarIcon'
 
 const store = createStore(reducers, applyMiddleware(reduxThunk));
 const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
 
 const App = () => {
+//로그인 여부.
+const [token, setToken] = useState('');
+    
+const _retrieveData = async () => {
+  try {
+    const value = await AsyncStorage.getItem('usertoken');
+    if (value !== null) {
+      console.log(value);
+      setToken(value)
+
+    }
+  } catch (error) {
+    // Error retrieving data
+  }
+};
+
+
+  //const token = AsyncStorage.getItem('usertoken');
+if(token){
+  console.log(token)
+}else{
+  console.log('토큰이 없습니다.')
+}
+
 //스크린 이미지를 3초후에 종료.
   useEffect(() => {
     setTimeout(function(){
@@ -39,62 +76,81 @@ const App = () => {
   }, []);
 
   return (
-
     <Provider store={store}>
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={Home} options={{
-                headerShown: false,
-              }}/>
-        <Stack.Screen name="SearchPW" component={SearchPW} options={{
-               headerTitle:'비밀번호 찾기',
-               headerStyle: {
-                 backgroundColor: '#41BD40',
-               },
-               headerTintColor: '#fff',
-               headerTitleStyle: {
-                 fontWeight: 'bold',
-                 fontSize:30,
-                 alignSelf: 'center' ,
-               },
-               headerRight: () => (
-                 <View></View>
-              ),
-              }}/>
-        <Stack.Screen name="Login" component={Login} options={{
-               headerTitle:'로그인',
-               headerStyle: {
-                 backgroundColor: '#41BD40',
-               },
-               headerTintColor: '#fff',
-               headerTitleStyle: {
-                 fontWeight: 'bold',
-                 fontSize:30,
-                 alignSelf: 'center' ,
-               },
-               headerRight: () => (
-                 <View></View>
-              ),
-              }}/>
-        <Stack.Screen name="Join" component={Join} 
-         options={{
-          headerTitle:'회원가입',
-          headerStyle: {
-            backgroundColor: '#41BD40',
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-            alignSelf: 'center' ,
-          },
-          headerRight: () => (
-            <View></View>
-         ),
-         }}/>
-         <Stack.Screen name="Main" component={Main} />
-      </Stack.Navigator>
-      
-    </NavigationContainer>
+      <NavigationContainer>
+        {token ?
+    <Stack.Navigator>
+      <Stack.Screen name="Home" component={Home} options={{
+              headerShown: false,
+            }}/>
+      <Stack.Screen name="SearchPW" component={SearchPW} options={{
+             headerTitle:'비밀번호 찾기',
+             headerStyle: {
+               backgroundColor: '#41BD40',
+             },
+             headerTintColor: '#fff',
+             headerTitleStyle: {
+               fontWeight: 'bold',
+               fontSize:30,
+               alignSelf: 'center' ,
+             },
+             headerRight: () => (
+               <View></View>
+            ),
+            }}/>
+      <Stack.Screen name="Login" component={Login} options={{
+             headerTitle:'로그인',
+             headerStyle: {
+               backgroundColor: '#41BD40',
+             },
+             headerTintColor: '#fff',
+             headerTitleStyle: {
+               fontWeight: 'bold',
+               fontSize:30,
+               alignSelf: 'center' ,
+             },
+             headerRight: () => (
+               <View></View>
+            ),
+            }}/>
+      <Stack.Screen name="Join" component={Join} 
+       options={{
+        headerTitle:'회원가입',
+        headerStyle: {
+          backgroundColor: '#41BD40',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          alignSelf: 'center' ,
+        },
+        headerRight: () => (
+          <View></View>
+       ),
+       }}/>
+        
+    </Stack.Navigator>
+    : 
+    <Tab.Navigator
+        screenOptions={({route})=> ({
+          tabBarIcon : ({focused,color}) => (
+            TabBarIcon(route.name, color, focused)
+          ),
+          
+        })
+      }
+      tabBarOptions= {{
+        showLabel: false
+    }}
+      >
+      <Tab.Screen name="Home" component={Tab_home} />
+      <Tab.Screen name="Schedule" component={Schedule} />
+      <Tab.Screen name="Map" component={Map} />
+      <Tab.Screen name="Message" component={Message} />
+      <Tab.Screen name="Setting" component={Setting} />
+      </Tab.Navigator>
+    }
+  </NavigationContainer>
     </Provider>
   );
 
