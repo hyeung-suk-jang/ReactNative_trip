@@ -1,28 +1,31 @@
-<script src="http://localhost:8097"></script>
 import React, { useState, useRef } from 'react';
-import { View, Text ,Alert,TextInput,StyleSheet,TouchableOpacity} from 'react-native';
-
-
-
+import { View, StyleSheet, Text, Button, ScrollView, StatusBar } from 'react-native';
+import TripItem from './TripItem';
 
 const Tab_home = ({ navigation }) => {
 
     return (
-        <View style={styles.container}>
-           <Text>home</Text>
-        </View>
+      <View style={styles.container}>
+        <StatusBar
+            backgroundColor='white'
+            barStyle='dark-content'
+        />
+        <ScrollView>
+            <TripItem />
+            <TripItem />
+            <TripItem />
+            <TripItem />
+            <TripItem />
+        </ScrollView>
+    </View>
     );
-
 };
-
 const styles = StyleSheet.create({
-  container:{
-    flex:1,
-    flexDirection: 'column',
-    fontFamily: 'THEBluewindRegular',
-    alignItems:'center',
-    backgroundColor:'#41BD40'
-  },
-  
-});
+  container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+  }
+})
+
 export default Tab_home;

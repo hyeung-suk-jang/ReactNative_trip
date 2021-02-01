@@ -50,7 +50,7 @@ const _retrieveData = async () => {
   try {
     const value = await AsyncStorage.getItem('usertoken');
     if (value !== null) {
-      console.log(value);
+      //console.log(value);
       setToken(value)
 
     }

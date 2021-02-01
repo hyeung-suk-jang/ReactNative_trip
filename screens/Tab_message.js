@@ -1,5 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { View, Text ,Alert,TextInput,StyleSheet,TouchableOpacity} from 'react-native';
+import firebase from '@react-native-firebase/app'
+
 
 const Tab_message = ({ navigation }) => {
     return (
